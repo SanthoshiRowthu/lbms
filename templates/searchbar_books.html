@@ -1,0 +1,38 @@
+{% extends 'table.html' %}
+{% block content %}
+    {% if data == 'empty' %}
+    <h1>No result found</h1>
+    {% else %}
+    <div class="table text-center mt-4 ml-4">
+        <table border="1px" cellpadding="20px" cellspacing="0px">
+            <tr>
+                     <th>Book ID</th>
+                     <th>Title</th>
+                     <th>Genre</th>
+                     <th>Author</th>
+                     <th>No.of copies</th>
+                     <th>Price</th>
+                     <th>Status</th>
+                     <th>Rented</th>
+                     <th>Under Replacement</th>
+                     <th>Date added</th>
+                
+            </tr>
+            {% for i in data %}
+            <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[2]}}</td>
+                    <td>{{i[7]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[6]}}</td>
+                    <td>{{i[8]}}</td>
+                    <td>{{i[9]}}</td>
+                    <td>{{i[5]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <title>PAY RENT</title>
+      <style>
+         *{
+            margin: 0;
+            padding: 0;
+            box-sizing:border-box;
+            font-family:'Times New Roman', Times, serif;
+        }
+        body {
+			font-family: 'Times New Roman', Times, serif;
+			background-color:white;
+            text-align: center;
+            margin: 0;
+            box-sizing: border-box;
+		}
+    /* CSS for header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color:rgb(75, 38, 75);
+    }
+    h2{
+        color:purple;
+    }
+
+    h1 {
+        color:white;
+        margin:0;
+        padding-left:50px;
+        text-transform:uppercase;
+        font-size:30px;
+        font-weight:900;
+    }
+    h1 span{
+         color:purple;
+    }        
+
+    .nav-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color:rgb(75, 38, 75); ;
+      margin-right: 20px;
+    }
+
+    .nav-items a {
+      text-decoration: none;
+      color: white;
+      padding: 35px 20px;
+    }
+    .nav-items a:hover{
+        color:purple;
+    }
+   
+
+      </style>
+    </head>
+    <body>
+        <header class="header">
+            <h1>Library<span> Book</span></h1> 
+            <nav class="nav-items">
+              <a href="{{url_for('home')}}">HOME</a>
+              <a href="{{url_for('payments')}}">PAY FINE</a>
+              <a href="{{url_for('view1')}}">BOOKS</a>
+              <a href="{{url_for('suggestions')}}">SUGGESTIONS</a>
+            </nav>
+          </header>
+        {% if rentids==0 %}
+        <h2> NO FILES FOUND</h2>
+        {% else %}
+        <div class="table text-center mt-4 ml-4">
+            <table border="1px" cellpadding="20px" cellspacing="0px">
+                <tr>
+                         <th>Rent Id</th>
+                         <th>Student Id</th>
+                         <th>Section</th>
+                         <th>Book Id</th>
+                         <th>Title</th>
+                         <th>Date taken</th>
+                         <th>Due Date</th>
+                         <th>Fine</th>
+                         <th>payment</th>
+                    
+                </tr>
+                {% for i in rentids %}
+                <tr>
+                        <td>{{i[0]}}</td>
+                        <td>{{i[1]}}</td>
+                        <td>{{i[2]}}</td>
+                        <td>{{i[3]}}</td>
+                        <td>{{i[4]}}</td>
+                        <td>{{i[8]}}</td>
+                        <td>{{i[5]}}</td>
+                        <td>{{i[6]}}</td>
+                        <form method="POST" action="{{url_for('pay',rentid=i[0],studid=i[1],fine=i[6])}}">
+                        <td><input type="submit" value="pay now"/></td>
+                        </form>
+
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+    </body>
+</html>

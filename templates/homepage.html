@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple HTML HomePage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+
+
+    body {
+      margin: 0;
+      box-sizing: border-box;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+
+    /* CSS for header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color:rgb(75, 38, 75);
+    }
+
+
+    h1 {
+    color:white;
+        margin:0;
+        padding-left:50px;
+        text-transform:uppercase;
+        font-size:30px;
+        font-weight:900;
+    }
+    h1 span{
+         color:purple;
+    }        
+
+
+    .nav-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color:rgb(75, 38, 75); ;
+      margin-right: 20px;
+    }
+
+
+    .nav-items a {
+      text-decoration: none;
+      color: white;
+      padding: 35px 20px;
+    }
+    .nav-items a:hover{
+        color:purple;
+    }
+
+
+    /* CSS for main element */
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 520px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://jerryjenkins.com/wp-content/uploads/2015/06/Library-Picture-Crop.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+
+    .intro h1 {
+      font-family:'Times New Roman', Times, serif;
+      font-size: 60px;
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+
+    .intro p {
+      font-size: 20px;
+      color: #d1d1d1;
+      text-transform: uppercase;
+      margin: 20px 0;
+    }
+
+
+    .intro button {
+      background-color:purple;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4)
+     
+
+
+    }
+    .intro button:hover{
+        background: rgb(52, 11, 52);
+    }
+
+
+    .achievements {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 40px 80px;
+    }
+
+
+    .achievements .work {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 40px;
+    }
+
+
+    .achievements .work i {
+      width: fit-content;
+      font-size: 50px;
+      color: #333333;
+      border-radius: 50%;
+      border: 2px solid #333333;
+      padding: 12px;
+    }
+
+
+    .achievements .work .work-heading {
+      font-size: 20px;
+      color: #333333;
+      text-transform: uppercase;
+      margin: 10px 0;
+    }
+
+
+    .achievements .work .work-text {
+      font-size: 15px;
+      color: #585858;
+      margin: 10px 0;
+    }
+
+
+    .about-me {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 80px;
+      border-top: 2px solid #eeeeee;
+    }
+
+
+    .about-me img {
+      width: 500px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+
+    .about-me-text h2 {
+      font-size: 30px;
+      color: #333333;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+
+    .about-me-text p {
+      font-size: 15px;
+      color: #585858;
+      margin: 10px 0;
+    }
+
+
+    /* CSS for footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #302f49;
+      padding: 40px 80px;
+    }
+
+
+    .footer .copy {
+      color: #fff;
+    }
+
+
+    .bottom-links {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+
+    .bottom-links .links {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 40px;
+    }
+
+
+    .bottom-links .links span {
+      font-size: 20px;
+      color: #fff;
+      text-transform: uppercase;
+      margin: 10px 0;
+    }
+
+
+    .bottom-links .links a {
+      text-decoration: none;
+      color: #a1a1a1;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+ {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+    <center><h3 style="color:black;padding-top: 5px;"><b>{{message}}</b></h3></center>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+<body>
+    <form method="POST">
+  <header class="header">
+    <h1>Library<span>Book</span></h1>
+    <nav class="nav-items">
+      <a href="{{url_for('home')}}">HOME</a>
+      <a href="{{url_for('payments')}}">PAY FINE</a>
+      <a href="{{url_for('view1')}}">BOOKS</a>
+      <a href="{{url_for('suggestions')}}">SUGGESTIONS</a>
+    </nav>
+  </header>
+  <main>
+    <div class="intro">
+      <h1>READ RENT RETURN</h1>
+      <p>The world is quite here</p>
+     
+     
+    </div>
+
+
+    <div class="about-me">
+      <div class="about-me-text">
+        <h2>About Library</h2>
+        <p> A library is the biggest resource for books. You can find all sorts of books here. Books from different genre such as science fiction, fiction and a lot more are kept in the library for people to borrow. You can use the books in the library for many different purpose.
+        </p>
+      </div>
+      <img src="https://tse1.mm.bing.net/th?id=OIP.Hnm8SOHGOFSnu2Bvz8tJVQHaE8&pid=Api&P=0" alt="me">
+    </div>
+  </main>
+</form>
+</body>
+
+
+</html>
+
+
+

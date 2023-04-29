@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>table</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"/>
+<style>
+  body{
+    font-family: 'Times New Roman', Times, serif;
+  }
+</style>
+  </head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <form class="form-inline" method='POST' action="{{url_for('search')}}">
+      <input class="form-control mr-sm-2" type="search" placeholder="Enter student id" aria-label="Search" name="ids">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <a href="{{url_for('viewsuggestions')}}"><button class="btn btn-outline-success my-2 my-sm-0">clear</button></a>
+    <a href="{{url_for('adminlogin')}}"><button class="btn btn-outline-success my-2 my-sm-0">Back</button></a>
+  </nav>
+  {% block content %}
+    <div class="table text-center mt-4 ml-4">
+    <table border="1px" cellpadding="20px" cellspacing="0px">
+        <tr>
+                 <th>Student id</th>
+                 <th>Section</th>
+                 <th>suggestion</th>
+            
+        </tr>
+        {% for i in ids %}
+        <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}}</td>
+        {% endfor %}
+    </table>
+</div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add a Book</title>
+	<style>
+		body {
+			font-family: 'Times New Roman', Times, serif;
+			background-color:rgb(183, 148, 183);
+		}
+        
+		
+		h1 {
+			color:#fff;
+            margin:0;
+            padding-left:50px;
+            text-transform:uppercase;
+            font-size:22px;
+            font-weight:900;
+        }
+        h1 span{
+            color:purple;
+		}
+		
+		form {
+			background-color:#fff;
+			border-radius: 5px;
+			padding: 20px;
+			margin: 20px auto;
+			max-width: 550px;
+			box-shadow:rgb(37, 1, 37)
+		}
+		
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+		
+		input[type="text"], select {
+			display: block;
+			width: 95%;
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+			margin-top: 5px;
+			font-size: 16px;
+            font-family: 'Times New Roman', Times, serif;
+		}
+		
+		input[type="submit"] {
+			background-color:purple;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-top: 20px;
+			font-size: 16px;
+            font-family: 'Times New Roman', Times, serif;
+		}
+		
+		input[type="submit"]:hover {
+			background-color:rgb(147, 82, 147);
+		}
+	</style>
+</head>
+<body>
+	
+	<CENTER><h1>ADD <span>Book</span></h1></CENTER>
+	<form method="POST">
+    <label for="BOOKID">BOOK ID:</label>
+		<input type="text" id="id" name="id" placeholder="Enter book Id..." required>
+
+		<label for="title">Title:</label>
+		<input type="text" id="title" name="title" placeholder="Enter book title..." required>
+		
+		<label for="author">Author:</label>
+		<input type="text" id="author" name="author" placeholder="Enter book author..."required>
+		
+		<label for="publisher">Copies:</label>
+		<input type="text" id="copies" name="copies" placeholder="Enter No of Copies...">
+
+		<label for="title">Price:</label>
+		<input type="text" id="price" name="price" placeholder="Enter book Price...">
+		
+		<label for="genre">Genre:</label>
+		<select id="genre" name="genre"required>
+			<option value="">Select genre...</option>
+			<option value="Fiction">Fiction</option>
+			<option value="Non-fiction">Non-fiction</option>
+			<option value="Fantasy">Fantasy</option>
+			<option value="Romance">Romance</option>
+			<option value="Mystery">Mystery</option>
+			<option value="Science fiction">Science fiction</option>
+			<option value="Devotional">Devotional</option>
+		</select>
+		
+		
+		<input type="submit" value="Add Book"> <a href="{{url_for('adminlogin')}}">back</a>
+	</form>
+</body>
+</html>

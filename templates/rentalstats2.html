@@ -1,0 +1,34 @@
+{% extends 'rentalstats.html' %}
+{% block content %}
+    {% if data == 'empty' %}
+    <h1>No result found</h1>
+    {% else %}
+    <div class="table text-center mt-4 ml-4">
+        <table border="1px" cellpadding="20px" cellspacing="0px">
+            <tr>
+                     <th>Rent Id</th>
+                     <th>Student Id</th>
+                     <th>Section</th>
+                     <th>Book Id</th>
+                     <th>Title</th>
+                     <th>Date taken</th>
+                     <th>Due Date</th>
+                     <th>Fine</th>
+                
+            </tr>
+            {% for i in data %}
+            <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[2]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[5]}}</td>
+                    <td>{{i[6]}}</td>
+                    <td>{{i[7]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}

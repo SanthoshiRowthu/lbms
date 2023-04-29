@@ -1,0 +1,16 @@
+<html>
+    <style>
+        body{
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+    <head></head>
+    <body>
+        {% block body %}
+        <h1>Book is rented but trouble in sending mail to student mail</h1>
+        <h2>Check your internet connection or you may have provided invalid Email</h2>
+        <br/>
+        <a href="{{url_for('adminlogin')}}">back</a>
+        {% endblock %}
+    </body>
+</html>
