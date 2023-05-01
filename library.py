@@ -20,34 +20,32 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD']='Admin'
 app.config['MYSQL_DB']='library'
 mysql=MySQL(app)
-
 def background_task():
     with app.app_context():
-        while True:
-            cursor=mysql.connection.cursor()
-            cursor.execute("select rent_id,due_date from rent")
-            data=cursor.fetchall()
-            cursor.close()
-            if len(data)!=0:
-                for i in data:
-                    cursor=mysql.connection.cursor()
-                    today=date.today()
-                    current_date=datetime.strptime(f'{str(today.day)}-{str(today.month)}-{str(today.year)}','%d-%m-%Y')
-                    due_date=i[1]
-                    due_date1=datetime.strptime(f'{str(due_date.day)}-{str(due_date.month)}-{str(due_date.year)}','%d-%m-%Y')
-                    diff=(current_date-due_date1).days
-                    if diff>0:
-                        per_day=100
-                        fine=diff*per_day
-                        cursor.execute('update rent set fine=%s where rent_id=%s',[fine,i[0]])
-                        mysql.connection.commit()
-                        cursor.close()
-               
+        cursor=mysql.connection.cursor()
+        cursor.execute("select rent_id,due_date from rent")
+        data=cursor.fetchall()
+        cursor.close()
+        if len(data)!=0:
+            for i in data:
+                cursor=mysql.connection.cursor()
+                today=date.today()
+                current_date=datetime.strptime(f'{str(today.day)}-{str(today.month)}-{str(today.year)}','%d-%m-%Y')
+                due_date=i[1]
+                due_date1=datetime.strptime(f'{str(due_date.day)}-{str(due_date.month)}-{str(due_date.year)}','%d-%m-%Y')
+                diff=(current_date-due_date1).days
+                if diff>0:
+                    per_day=100
+                    fine=diff*per_day
+                    cursor.execute('update rent set fine=%s where rent_id=%s',[fine,i[0]])
+                    mysql.connection.commit()
+                    cursor.close()
+
 @app.route('/')
 def home():
     return render_template('homepage.html')
-         
-           
+
+
 @app.route('/adminlogin')
 def login():
     return render_template('adminlogin.html')
@@ -88,8 +86,8 @@ def otp(otp,user,password,email):
         else:
             flash('Wrong otp')
             return render_template('otp.html',otp=otp,user=user,email=email,password=password)
-    return redirect(url_for('mainpage'))        
-        
+    return redirect(url_for('mainpage'))
+
 @app.route('/validate',methods=['POST'])
 def validate():
     user=request.form['user']
@@ -121,7 +119,7 @@ def delete():
         mysql.connection.commit()
         cursor.close()
         return redirect(url_for('adminlogin'))
-   
+
 @app.route('/clearsuggestions')
 def clear():
     cursor=mysql.connection.cursor()
@@ -129,7 +127,7 @@ def clear():
     mysql.connection.commit()
     return redirect(url_for('adminlogin'))
     cursor.close()
-   
+
 
 @app.route('/addbook',methods=['GET','POST'])
 def addbook():
@@ -193,7 +191,7 @@ def search_rentbar():
             count=cursor.fetchall()
             cursor.close()
             return render_template('rentalstats2.html',data=count)
-       
+
 @app.route('/booksearch',methods=['POST'])
 def booksearch():
     if request.method=='POST':
@@ -209,7 +207,7 @@ def booksearch():
             cursor.execute('select * from library where book_id=%s',[data])
             count=cursor.fetchall()
             cursor.close()
-            return render_template('searchbar_books.html',data=count)        
+            return render_template('searchbar_books.html',data=count)
 @app.route('/searchbar',methods=['GET','POST'])
 def search():
     if request.method=='POST':
@@ -242,7 +240,7 @@ def usersearch():
             count=cursor.fetchall()
             print(count)
             cursor.close()
-            return render_template('searchbar_users.html',data=count)        
+            return render_template('searchbar_users.html',data=count)
 @app.route('/addsuggestion',methods=['GET','POST'])
 def suggestions():
     if request.method=="POST":
@@ -399,7 +397,7 @@ def retreiverent():
         cursor.execute('SELECT email from admin')
         details=cursor.fetchall()[0]
         email_from=details[0]
-        cursor.execute('DELETE FROM RENT where rent_id=%s',[id1[0]])
+        cursor.execute('DELETE FROM rent where rent_id=%s',[id1[0]])
         mysql.connection.commit()
         cursor.execute('SELECT STATUS from library where book_id=%s',[id1[2]])
         status=cursor.fetchall()[0]
@@ -454,12 +452,13 @@ def retrievefromreplace():
         fresh_status=f'{score} Available'
         cursor.execute('SELECT underreplacement from library where book_id=%s',[id1])
         under=int(cursor.fetchone()[0])-1
-        cursor.execute('UPDATE LIBRARY set status=%s,underreplacement=%s where book_id=%s',[fresh_status,under,id1])
+        cursor.execute('UPDATE library set status=%s,underreplacement=%s where book_id=%s',[fresh_status,under,id1])
         mysql.connection.commit()
         return redirect(url_for('adminlogin'))
     return render_template('fromreplacement.html',books=books)
 @app.route('/payments',methods=['GET','POST'])
 def payments():
+    background_task()
     cursor=mysql.connection.cursor()
     cursor.execute('SELECT * from rent where fine>0')
     rentids1=cursor.fetchall()
@@ -527,8 +526,4 @@ def success_pay(rentid,fine):
         return redirect(url_for('home'))
     else:
         abort(404,description="Page not found")
-
-if __name__ == "__main__":
-    thread = Thread(target=background_task)
-    thread.start()
     app.run(debug=True,use_reloader=True)
